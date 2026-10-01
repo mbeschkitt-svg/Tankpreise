@@ -1,0 +1,37 @@
+name: Tankpreise erfassen
+
+on:
+  schedule:
+    # Alle 10 Minuten, 04:00 bis 21:50 UTC (deutsche Ortszeit etwa 06:00 bis 23:50)
+    - cron: "*/10 4-21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tankpreise
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preise abrufen
+        env:
+          TANKERKOENIG_KEY: ${{ secrets.TANKERKOENIG_KEY }}
+          STATION_REWE: ${{ vars.STATION_REWE }}
+          STATION_ENI: ${{ vars.STATION_ENI }}
+        run: python3 tankpreise.py collect
+
+      - name: CSV speichern
+        run: |
+          git config user.name "tankpreise-bot"
+          git config user.email "tankpreise-bot@users.noreply.github.com"
+          git add tankpreise.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "Preise $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase
+          git push
