@@ -1,9 +1,7 @@
 name: Tankpreise erfassen
 
 on:
-  schedule:
-    # Alle 30 Minuten (jeweils :08 und :38), 04:08 bis 20:38 UTC (Sommer 06:08 bis 22:38 Uhr, Winter 05:08 bis 21:38 Uhr Ortszeit)
-    - cron: "8,38 4-20 * * *"
+  # Ausloeser: cron-job.org ruft workflow_dispatch auf (:08 und :38, Europe/Berlin)
   workflow_dispatch:
 
 permissions:
