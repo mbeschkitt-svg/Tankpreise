@@ -10,7 +10,7 @@ Einrichtung:
     1. Kostenlosen API-Schluessel bei Tankerkoenig holen (creativecommons.tankerkoenig.de).
     2. Station-IDs (UUIDs) beider Tankstellen in STATIONS eintragen.
     3. Schluessel als Umgebungsvariable TANKERKOENIG_KEY setzen.
-    4. collect alle 10 Minuten automatisch starten (Windows Aufgabenplanung oder cron).
+    4. collect alle 30 Minuten automatisch starten (Windows Aufgabenplanung oder cron).
 
 Nur Standardbibliothek, keine zusaetzlichen Pakete noetig.
 """
